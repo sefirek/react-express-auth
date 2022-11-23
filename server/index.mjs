@@ -33,7 +33,6 @@ app.get('/posts', authorization, (req, res) => {
 });
 
 const ACCESS_TOKEN_SECRET = '' + process.env.ACCESS_TOKEN_SECRET;
-const REFRESH_TOKEN_SECRET = '' + process.env.REFRESH_TOKEN_SECRET;
 const tokens = [];
 
 app.post('/login', (req, res) => {
@@ -49,17 +48,6 @@ app.post('/login', (req, res) => {
     .status(200)
     .setHeader('X-Powered-By', 'sefirek')
     .json({ message: 'Logged in successfully 😊 👌' });
-});
-
-app.post('/token', (req, res) => {
-  const refreshToken = req.body.token;
-  if (!refreshToken) return res.sendStatus(401);
-  if (!tokens.includes(refreshToken)) return res.sendStatus(403);
-  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    const accessToken = generateAccessToken({ name: user.name });
-    res.json({ accessToken });
-  });
 });
 
 app.post('/logout', authorization, (req, res) => {

@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from './slices/sliceLogin';
 import { useState } from 'react';
